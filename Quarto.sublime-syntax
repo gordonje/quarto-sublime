@@ -1821,4 +1821,19 @@ contexts:
     - match: ''
       pop: true
 
+  prototype:
+    - meta_prepend: true
+    - include: template-tags
 
+  template-tags:
+    - match: '{{<'
+      scope: punctuation.section.interpolation.begin.quarto
+      push: template-tag-body
+
+  template-tag-body:
+    - meta_scope: meta.interpolation.quarto
+    - match: '>}}'
+      scope: punctuation.section.interpolation.end.quarto
+      pop: 1
+    - match: \b(?:include)\b
+      scope: keyword.control.import.quarto
